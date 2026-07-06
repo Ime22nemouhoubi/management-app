@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const { pool } = require('../db');
 const { sign } = require('../middleware/auth');
 
-const router = express.Router();
+const router = require('../middleware/safeRouter')();
 
 // Default plan seeded on registration — fully editable afterwards.
 async function seedDefaults(userId) {

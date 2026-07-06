@@ -22,9 +22,12 @@ app.get('*', (_req, res, next) => {
 
 // Central error handler — never leak stack traces to the client
 app.use((err, _req, res, _next) => {
-  console.error(err);
+  console.error('API ERROR:', err.message, '\n', err.stack);
   res.status(500).json({ error: 'Something went wrong on our side. Try again.' });
 });
+
+// Last resort: log instead of crashing the process
+process.on('unhandledRejection', err => console.error('UNHANDLED REJECTION:', err));
 
 const PORT = process.env.PORT || 3000;
 ensureSchema()
